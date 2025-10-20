@@ -980,75 +980,291 @@ const VideoConference = () => {
   }, [user]);
 
   const renderHome = () => (
-    <div className="container mt-5">
+    <div className="container mt-5 mb-5">
       <div className="row justify-content-center">
         <div className="col-md-10">
-          <div className="card shadow-lg border-0 mb-4">
-            <div className="card-body p-5 text-center">
-              <h1 className="display-4 mb-4">🎥 VideoConnect Pro</h1>
-              <p className="lead text-muted mb-4">Next-generation video conferencing platform</p>
-              
+          {/* Main Card with Gradient Header */}
+          <div className="card shadow-lg border-0 mb-4 overflow-hidden">
+            {/* Gradient Header Banner */}
+            <div style={{
+              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              padding: '3rem 2rem',
+              position: 'relative',
+              overflow: 'hidden'
+            }}>
+              <div style={{
+                position: 'absolute',
+                top: '-50px',
+                right: '-50px',
+                width: '200px',
+                height: '200px',
+                background: 'rgba(255,255,255,0.1)',
+                borderRadius: '50%'
+              }}></div>
+              <div style={{
+                position: 'absolute',
+                bottom: '-30px',
+                left: '-30px',
+                width: '150px',
+                height: '150px',
+                background: 'rgba(255,255,255,0.1)',
+                borderRadius: '50%'
+              }}></div>
+              <div className="text-center position-relative" style={{ zIndex: 1 }}>
+                <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>🎥</div>
+                <h1 className="display-3 text-white fw-bold mb-2">VideoConnect Pro</h1>
+                <p className="text-white-50 fs-5 mb-0">
+                  <i className="bi bi-lightning-charge-fill me-2"></i>
+                  Connect instantly, collaborate seamlessly
+                </p>
+              </div>
+            </div>
+
+            <div className="card-body p-5">
               {!user ? (
-                <div>
-                  <p className="mb-4">Sign in with your Google account to get started</p>
-                  <button onClick={handleGoogleSignIn} className="btn btn-danger btn-lg px-5">
+                <div className="text-center py-5">
+                  <div className="mb-4">
+                    <div style={{
+                      display: 'inline-block',
+                      padding: '2rem',
+                      background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                      borderRadius: '50%',
+                      marginBottom: '2rem'
+                    }}>
+                      <i className="bi bi-shield-lock-fill text-white" style={{ fontSize: '3rem' }}></i>
+                    </div>
+                  </div>
+                  <h3 className="mb-3">🚀 Ready to Get Started?</h3>
+                  <p className="text-muted mb-4 fs-5">Sign in securely with your Google account</p>
+                  <button 
+                    onClick={handleGoogleSignIn} 
+                    className="btn btn-lg px-5 py-3 shadow-sm"
+                    style={{
+                      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '50px',
+                      transition: 'transform 0.2s',
+                      fontWeight: '600'
+                    }}
+                    onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                    onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                  >
                     <i className="bi bi-google me-2"></i> Sign in with Google
                   </button>
                 </div>
               ) : (
                 <div>
-                  <div className="card border-0 bg-light mb-4 p-3">
-                    <div className="d-flex align-items-center">
-                      <img src={userProfile?.photoURL} alt="Profile" className="rounded-circle me-3" width="80" height="80" />
-                      <div className="text-start flex-grow-1">
-                        <h4 className="mb-1">{userProfile?.displayName}</h4>
-                        <p className="text-muted mb-2">{userProfile?.email}</p>
-                        <p className="mb-0"><small>{userProfile?.bio}</small></p>
-                      </div>
-                    </div>
-                    
-                    <div className="row mt-3 text-center">
-                      <div className="col-4">
-                        <div className="p-2 bg-white rounded">
-                          <h5 className="mb-0 text-primary">{userStats.meetingsHosted}</h5>
-                          <small className="text-muted">Hosted</small>
+                  {/* Enhanced User Profile Card */}
+                  <div className="card mb-4 shadow-sm" style={{
+                    background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
+                    border: 'none',
+                    borderRadius: '20px'
+                  }}>
+                    <div className="card-body p-4">
+                      <div className="d-flex align-items-center mb-4">
+                        <div style={{ position: 'relative' }}>
+                          <img 
+                            src={userProfile?.photoURL} 
+                            alt="Profile" 
+                            className="rounded-circle shadow" 
+                            width="90" 
+                            height="90"
+                            style={{ border: '4px solid white' }}
+                          />
+                          <div style={{
+                            position: 'absolute',
+                            bottom: '5px',
+                            right: '5px',
+                            width: '20px',
+                            height: '20px',
+                            background: '#10b981',
+                            borderRadius: '50%',
+                            border: '3px solid white'
+                          }}></div>
+                        </div>
+                        <div className="ms-4 flex-grow-1">
+                          <h3 className="mb-2 fw-bold">
+                            <i className="bi bi-person-circle me-2" style={{ color: '#667eea' }}></i>
+                            {userProfile?.displayName}
+                          </h3>
+                          <p className="text-muted mb-2">
+                            <i className="bi bi-envelope-fill me-2"></i>
+                            {userProfile?.email}
+                          </p>
+                          <p className="mb-0 fst-italic" style={{ color: '#666' }}>
+                            <i className="bi bi-chat-quote-fill me-2"></i>
+                            {userProfile?.bio}
+                          </p>
                         </div>
                       </div>
-                      <div className="col-4">
-                        <div className="p-2 bg-white rounded">
-                          <h5 className="mb-0 text-success">{userStats.meetingsJoined}</h5>
-                          <small className="text-muted">Joined</small>
+                      
+                      {/* Creative Statistics Grid */}
+                      <div className="row g-3">
+                        <div className="col-4">
+                          <div className="text-center p-3 bg-white rounded-3 shadow-sm h-100" style={{
+                            transition: 'transform 0.2s',
+                            cursor: 'pointer'
+                          }}
+                          onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-5px)'}
+                          onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+                          >
+                            <div className="mb-2" style={{
+                              display: 'inline-block',
+                              padding: '0.5rem',
+                              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                              borderRadius: '10px'
+                            }}>
+                              <i className="bi bi-camera-video-fill text-white" style={{ fontSize: '1.5rem' }}></i>
+                            </div>
+                            <h4 className="mb-0 fw-bold text-primary">{userStats.meetingsHosted}</h4>
+                            <small className="text-muted fw-semibold">Meetings Hosted</small>
+                          </div>
                         </div>
-                      </div>
-                      <div className="col-4">
-                        <div className="p-2 bg-white rounded">
-                          <h5 className="mb-0 text-info">{userStats.totalMinutes}</h5>
-                          <small className="text-muted">Minutes</small>
+                        <div className="col-4">
+                          <div className="text-center p-3 bg-white rounded-3 shadow-sm h-100" style={{
+                            transition: 'transform 0.2s',
+                            cursor: 'pointer'
+                          }}
+                          onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-5px)'}
+                          onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+                          >
+                            <div className="mb-2" style={{
+                              display: 'inline-block',
+                              padding: '0.5rem',
+                              background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                              borderRadius: '10px'
+                            }}>
+                              <i className="bi bi-people-fill text-white" style={{ fontSize: '1.5rem' }}></i>
+                            </div>
+                            <h4 className="mb-0 fw-bold text-success">{userStats.meetingsJoined}</h4>
+                            <small className="text-muted fw-semibold">Meetings Joined</small>
+                          </div>
+                        </div>
+                        <div className="col-4">
+                          <div className="text-center p-3 bg-white rounded-3 shadow-sm h-100" style={{
+                            transition: 'transform 0.2s',
+                            cursor: 'pointer'
+                          }}
+                          onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-5px)'}
+                          onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+                          >
+                            <div className="mb-2" style={{
+                              display: 'inline-block',
+                              padding: '0.5rem',
+                              background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
+                              borderRadius: '10px'
+                            }}>
+                              <i className="bi bi-clock-history text-white" style={{ fontSize: '1.5rem' }}></i>
+                            </div>
+                            <h4 className="mb-0 fw-bold text-info">{userStats.totalMinutes}</h4>
+                            <small className="text-muted fw-semibold">Total Minutes</small>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                   
-                  <div className="row g-3 mb-4">
+                  {/* Creative Action Buttons */}
+                  <div className="row g-4 mb-4">
                     <div className="col-md-6">
-                      <button onClick={createMeeting} className="btn btn-primary btn-lg w-100 py-3">
-                        <h5 className="mb-0">➕ New Meeting</h5>
-                        <small>Start instant meeting</small>
-                      </button>
+                      <div 
+                        onClick={createMeeting} 
+                        className="card border-0 shadow-sm h-100"
+                        style={{
+                          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                          cursor: 'pointer',
+                          transition: 'all 0.3s',
+                          borderRadius: '20px'
+                        }}
+                        onMouseOver={(e) => {
+                          e.currentTarget.style.transform = 'translateY(-10px)';
+                          e.currentTarget.style.boxShadow = '0 20px 40px rgba(102, 126, 234, 0.4)';
+                        }}
+                        onMouseOut={(e) => {
+                          e.currentTarget.style.transform = 'translateY(0)';
+                          e.currentTarget.style.boxShadow = '';
+                        }}
+                      >
+                        <div className="card-body text-center py-5 text-white">
+                          <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>
+                            <i className="bi bi-plus-circle-fill"></i>
+                          </div>
+                          <h4 className="fw-bold mb-2">Start New Meeting</h4>
+                          <p className="mb-0 opacity-75">Create an instant meeting room</p>
+                        </div>
+                      </div>
                     </div>
                     <div className="col-md-6">
-                      <button onClick={() => setCurrentView('join')} className="btn btn-success btn-lg w-100 py-3">
-                        <h5 className="mb-0">🚪 Join Meeting</h5>
-                        <small>Enter meeting code</small>
-                      </button>
+                      <div 
+                        onClick={() => setCurrentView('join')} 
+                        className="card border-0 shadow-sm h-100"
+                        style={{
+                          background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                          cursor: 'pointer',
+                          transition: 'all 0.3s',
+                          borderRadius: '20px'
+                        }}
+                        onMouseOver={(e) => {
+                          e.currentTarget.style.transform = 'translateY(-10px)';
+                          e.currentTarget.style.boxShadow = '0 20px 40px rgba(16, 185, 129, 0.4)';
+                        }}
+                        onMouseOut={(e) => {
+                          e.currentTarget.style.transform = 'translateY(0)';
+                          e.currentTarget.style.boxShadow = '';
+                        }}
+                      >
+                        <div className="card-body text-center py-5 text-white">
+                          <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>
+                            <i className="bi bi-door-open-fill"></i>
+                          </div>
+                          <h4 className="fw-bold mb-2">Join Meeting</h4>
+                          <p className="mb-0 opacity-75">Enter a meeting code to join</p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   
-                  <button onClick={handleSignOut} className="btn btn-outline-secondary">
-                    🚪 Sign Out
-                  </button>
+                  {/* Sign Out Button */}
+                  <div className="text-center">
+                    <button 
+                      onClick={handleSignOut} 
+                      className="btn btn-outline-secondary btn-lg px-5"
+                      style={{ borderRadius: '50px' }}
+                    >
+                      <i className="bi bi-box-arrow-right me-2"></i> Sign Out
+                    </button>
+                  </div>
                 </div>
               )}
+            </div>
+          </div>
+
+          {/* Enhanced Copyright Footer */}
+          <div className="text-center mt-4">
+            <div className="card border-0 shadow-sm" style={{
+              background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
+              borderRadius: '15px'
+            }}>
+              <div className="card-body py-3">
+                <p className="mb-1 fw-semibold" style={{ color: '#667eea' }}>
+                  <i className="bi bi-c-circle me-1"></i>
+                  {new Date().getFullYear()} VideoConnect Pro - All Rights Reserved
+                </p>
+                <p className="mb-0 text-muted">
+                  <i className="bi bi-code-slash me-1"></i>
+                  Crafted with <span style={{ color: '#ef4444' }}>❤️</span> by{' '}
+                  <a 
+                    href="https://Muindikelvin.github.io" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="text-decoration-none fw-bold"
+                    style={{ color: '#667eea' }}
+                  >
+                    Muindikelvin.github.io
+                  </a>
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -1057,61 +1273,172 @@ const VideoConference = () => {
   );
 
   const ShareModal = () => (
-    <div className="modal show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+    <div className="modal show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.7)' }}>
       <div className="modal-dialog modal-dialog-centered">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h5 className="modal-title">🎉 Meeting Created Successfully!</h5>
-            <button type="button" className="btn-close" onClick={() => setShowShareModal(false)}></button>
-          </div>
-          <div className="modal-body">
-            <p className="mb-3">Share this meeting link with participants:</p>
-            <div className="input-group mb-3">
-              <input 
-                type="text" 
-                className="form-control" 
-                value={generatedMeetingLink} 
-                readOnly 
-              />
-              <button 
-                className="btn btn-outline-secondary" 
-                onClick={() => shareOnPlatform('copy')}
-              >
-                📋 Copy
-              </button>
-            </div>
-            
-            <p className="mb-2"><strong>Share on:</strong></p>
-            <div className="d-grid gap-2">
-              <button 
-                className="btn btn-success" 
-                onClick={() => shareOnPlatform('whatsapp')}
-              >
-                <i className="bi bi-whatsapp me-2"></i> WhatsApp
-              </button>
-              <button 
-                className="btn btn-info text-white" 
-                onClick={() => shareOnPlatform('telegram')}
-              >
-                <i className="bi bi-telegram me-2"></i> Telegram
-              </button>
-              <button 
-                className="btn btn-secondary" 
-                onClick={() => shareOnPlatform('email')}
-              >
-                <i className="bi bi-envelope me-2"></i> Email
-              </button>
-            </div>
-          </div>
-          <div className="modal-footer">
+        <div className="modal-content border-0 shadow-lg" style={{ borderRadius: '20px', overflow: 'hidden' }}>
+          {/* Gradient Header */}
+          <div style={{
+            background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+            padding: '2rem',
+            position: 'relative'
+          }}>
+            <div style={{
+              position: 'absolute',
+              top: '-20px',
+              right: '-20px',
+              width: '100px',
+              height: '100px',
+              background: 'rgba(255,255,255,0.1)',
+              borderRadius: '50%'
+            }}></div>
             <button 
               type="button" 
-              className="btn btn-primary" 
+              className="btn-close btn-close-white position-absolute top-0 end-0 m-3" 
+              onClick={() => setShowShareModal(false)}
+              style={{ zIndex: 10 }}
+            ></button>
+            <div className="text-center text-white position-relative">
+              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🎉</div>
+              <h4 className="mb-0 fw-bold">Meeting Created Successfully!</h4>
+            </div>
+          </div>
+
+          <div className="modal-body p-4">
+            {/* Meeting Link Section */}
+            <div className="mb-4">
+              <div className="d-flex align-items-center mb-3">
+                <div style={{
+                  width: '40px',
+                  height: '40px',
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                  borderRadius: '10px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginRight: '1rem'
+                }}>
+                  <i className="bi bi-link-45deg text-white" style={{ fontSize: '1.5rem' }}></i>
+                </div>
+                <div>
+                  <h6 className="mb-0 fw-bold">Your Meeting Link</h6>
+                  <small className="text-muted">Share this with participants</small>
+                </div>
+              </div>
+              
+              <div className="input-group shadow-sm" style={{ borderRadius: '10px', overflow: 'hidden' }}>
+                <input 
+                  type="text" 
+                  className="form-control border-0 bg-light" 
+                  value={generatedMeetingLink} 
+                  readOnly 
+                  style={{ padding: '0.75rem 1rem' }}
+                />
+                <button 
+                  className="btn border-0"
+                  onClick={() => shareOnPlatform('copy')}
+                  style={{
+                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    color: 'white',
+                    padding: '0.75rem 1.5rem'
+                  }}
+                >
+                  <i className="bi bi-clipboard-check me-1"></i> Copy
+                </button>
+              </div>
+            </div>
+            
+            {/* Share Options */}
+            <div>
+              <div className="d-flex align-items-center mb-3">
+                <div style={{
+                  width: '40px',
+                  height: '40px',
+                  background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                  borderRadius: '10px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginRight: '1rem'
+                }}>
+                  <i className="bi bi-share-fill text-white" style={{ fontSize: '1.2rem' }}></i>
+                </div>
+                <h6 className="mb-0 fw-bold">Quick Share</h6>
+              </div>
+              
+              <div className="row g-3">
+                <div className="col-4">
+                  <button 
+                    className="btn w-100 shadow-sm border-0 d-flex flex-column align-items-center py-3"
+                    onClick={() => shareOnPlatform('whatsapp')}
+                    style={{
+                      background: '#25D366',
+                      color: 'white',
+                      borderRadius: '15px',
+                      transition: 'transform 0.2s'
+                    }}
+                    onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                    onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                  >
+                    <i className="bi bi-whatsapp" style={{ fontSize: '2rem', marginBottom: '0.5rem' }}></i>
+                    <small className="fw-semibold">WhatsApp</small>
+                  </button>
+                </div>
+                <div className="col-4">
+                  <button 
+                    className="btn w-100 shadow-sm border-0 d-flex flex-column align-items-center py-3"
+                    onClick={() => shareOnPlatform('telegram')}
+                    style={{
+                      background: '#0088cc',
+                      color: 'white',
+                      borderRadius: '15px',
+                      transition: 'transform 0.2s'
+                    }}
+                    onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                    onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                  >
+                    <i className="bi bi-telegram" style={{ fontSize: '2rem', marginBottom: '0.5rem' }}></i>
+                    <small className="fw-semibold">Telegram</small>
+                  </button>
+                </div>
+                <div className="col-4">
+                  <button 
+                    className="btn w-100 shadow-sm border-0 d-flex flex-column align-items-center py-3"
+                    onClick={() => shareOnPlatform('email')}
+                    style={{
+                      background: '#6c757d',
+                      color: 'white',
+                      borderRadius: '15px',
+                      transition: 'transform 0.2s'
+                    }}
+                    onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                    onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                  >
+                    <i className="bi bi-envelope-fill" style={{ fontSize: '2rem', marginBottom: '0.5rem' }}></i>
+                    <small className="fw-semibold">Email</small>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Footer */}
+          <div className="modal-footer border-0 p-4 pt-0">
+            <button 
+              type="button" 
+              className="btn btn-lg w-100 shadow-sm border-0"
               onClick={() => {
                 setShowShareModal(false);
                 joinMeeting(meetingId);
               }}
+              style={{
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                color: 'white',
+                borderRadius: '50px',
+                padding: '0.75rem 2rem',
+                fontWeight: '600'
+              }}
             >
+              <i className="bi bi-camera-video-fill me-2"></i>
               Join Meeting Now
             </button>
           </div>
