@@ -74,6 +74,9 @@ const VideoConference = () => {
   const remoteStreamsRef = useRef({});
   const remoteVideoRefsRef = useRef({});
 
+  const [isMobileView, setIsMobileView] = useState(false);
+  const [showMobileSidebar, setShowMobileSidebar] = useState(false);
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
@@ -576,8 +579,16 @@ const VideoConference = () => {
   const initializeMedia = async () => {
     try {
       const constraints = {
-        video: previewVideoEnabled ? { width: 1280, height: 720 } : false,
-        audio: previewAudioEnabled ? { echoCancellation: true, noiseSuppression: true } : false
+        video: previewVideoEnabled ? { 
+          width: { ideal: 1280 }, 
+          height: { ideal: 720 },
+          facingMode: 'user'
+        } : false,
+        audio: previewAudioEnabled ? { 
+          echoCancellation: true, 
+          noiseSuppression: true,
+          autoGainControl: true 
+        } : false
       };
       
       const stream = await navigator.mediaDevices.getUserMedia(constraints);
@@ -585,6 +596,12 @@ const VideoConference = () => {
       
       if (localVideoRef.current && previewVideoEnabled) {
         localVideoRef.current.srcObject = stream;
+        // Force video to play - critical for camera capture
+        try {
+          await localVideoRef.current.play();
+        } catch (playError) {
+          console.warn('Video autoplay prevented:', playError);
+        }
       }
       
       setIsVideoOff(!previewVideoEnabled);
@@ -594,6 +611,7 @@ const VideoConference = () => {
       alert('Cannot access camera/microphone: ' + error.message);
     }
   };
+
 
   const listenToMeetingUpdates = (id) => {
     const waitingRoomRef = ref(database, `meetings/${id}/waitingRoom`);
